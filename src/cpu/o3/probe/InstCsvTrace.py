@@ -1,0 +1,46 @@
+# Copyright (c) 2024
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met: redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer;
+# redistributions in binary form must reproduce the above copyright
+# notice, this list of conditions and the following disclaimer in the
+# documentation and/or other materials provided with the distribution;
+# neither the name of the copyright holders nor the names of its
+# contributors may be used to endorse or promote products derived from
+# this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+from m5.objects.Probe import *
+
+
+class InstCsvTrace(ProbeListenerObject):
+    type = "InstCsvTrace"
+    cxx_class = "gem5::o3::InstCsvTrace"
+    cxx_header = "cpu/o3/probe/inst_csv_trace.hh"
+
+    trace_file = Param.String("inst_trace.csv", "Output CSV trace file name")
+    trace_fetch = Param.Bool(False, "Enable fetch timing tracking")
+    trace_mem = Param.Bool(True, "Include memory access details in trace")
+    start_after_inst = Param.UInt64(
+        0, "Start tracing after this many committed instructions"
+    )
+    stop_after_inst = Param.UInt64(
+        0, "Stop tracing after this many traced instructions (0 = no limit)"
+    )
+    flush_interval = Param.UInt64(
+        0, "Flush output every N instructions (0 = no periodic flush)"
+    )
